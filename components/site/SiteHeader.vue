@@ -25,14 +25,29 @@ const crumb = computed(() => {
 const isHome = computed(() => route.path === "/");
 const isAbout = computed(() => route.path === "/about");
 
-// Track scroll progress on homepage
+// Track scroll progress and active chapter on homepage
 const scrollProgress = ref(0);
+const activeChapter = ref("[01]");
 
 const onScroll = () => {
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   if (docHeight > 0) {
     scrollProgress.value = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
+  }
+
+  // Detect active chapter from sections in view
+  if (isHome.value && typeof document !== "undefined") {
+    const chapters = Array.from(document.querySelectorAll("[data-chapter]")) as HTMLElement[];
+    const triggerPoint = window.innerHeight * 0.45;
+    for (const el of chapters) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= triggerPoint && rect.bottom >= triggerPoint) {
+        const num = el.getAttribute("data-chapter");
+        if (num) activeChapter.value = `[${num}]`;
+        break;
+      }
+    }
   }
 };
 
@@ -78,7 +93,7 @@ onBeforeUnmount(() => {
             :style="{ width: `${scrollProgress}%` }"
           />
           <span class="relative z-10 max-w-full truncate font-bold">About us</span>
-          <span class="relative z-10 font-mono text-[11px] font-bold">[01]</span>
+          <span class="relative z-10 font-mono text-[11px] font-bold">{{ isHome ? activeChapter : "[01]" }}</span>
         </NuxtLink>
 
         <!-- GET STARTED TAB -->

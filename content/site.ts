@@ -82,12 +82,13 @@ export const home = {
   },
   help: {
     eyebrow: "How we help",
-    title: ["Ship sooner.", "Spend smarter.", "Grow steadier."],
+    title: ["Launch faster.", "Operate leaner.", "Sell smarter."],
     items: [
-      { title: "Turn fixed costs into variable", body: "Pick from ready styles and pay only for what you produce." },
-      { title: "Shorter time to market", body: "Production-ready designs go from selection to shelf in weeks." },
-      { title: "Flexible minimums", body: "Test small, learn fast, reorder what sells." },
-      { title: "A single accountable team", body: "Design, sourcing, quality and logistics under one roof." },
+      { title: "Change fixed cost to variable", body: "Skip the fixed salaries. Just pick from Nitex's ready styles and pay only when you order." },
+      { title: "Focus on your brand", body: "Free your team to focus on creative works while we handle the backend supply chain." },
+      { title: "Scale with efficiency", body: "Leverage our vetted factory network to secure better pricing and consistent quality." },
+      { title: "Move with speed", body: "React instantly to market shifts with ready-to-shop designs and flexible production." },
+      { title: "Deliver with confidence", body: "Our built-in real-time order tracking means you stay in control, even under pressure." },
     ],
   },
   showcase: {
