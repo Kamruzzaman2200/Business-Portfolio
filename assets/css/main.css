@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@source "../../components";
+@source "../../pages";
+@source "../../layouts";
+@source "../../app.vue";
+
+/* ───────── Design tokens — edit for your client ───────── */
+@theme {
+  --color-accent: #d7ff00;
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-grey: #e6e6e6;
+
+  --font-display: "Archivo", "Arial Black", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "Fragment Mono", ui-monospace, monospace;
+  --font-script: "Caveat", cursive;
+
+  --spacing-gap: 12px;
+  --spacing-header: 56px;
+  --ease-brand: cubic-bezier(0.65, 0, 0.35, 1); /* ≈ GSAP power2.inOut */
+}
+
+:root { --grid-gap: 12px; --grid-bleed: 12px; }
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ───────── Type scale ───────── */
+@utility t-display {
+  font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase;
+  font-size: clamp(48px, 10.4vw, 150px); line-height: 0.85; letter-spacing: -0.01em;
+}
+@utility t-h1 {
+  font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase;
+  font-size: clamp(40px, 7vw, 100px); line-height: 0.9;
+}
+@utility t-h2 {
+  font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase;
+  font-size: clamp(32px, 4.7vw, 68px); line-height: 0.9;
+}
+@utility t-h3 {
+  font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase;
+  font-size: 20px; line-height: 1.05; letter-spacing: -0.01em;
+}
+@utility t-stat {
+  font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 44px; line-height: 1;
+}
+@utility t-label {
+  font-family: var(--font-mono); text-transform: uppercase; font-size: 14px; line-height: 1.3; letter-spacing: -0.01em;
+}
+@utility t-label-sm {
+  font-family: var(--font-mono); text-transform: uppercase; font-size: 12px; line-height: 1.3;
+}
+@utility grid-6 {
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--grid-gap); padding-inline: var(--grid-bleed);
+}
+
+.line { overflow: clip; }
+
+/* Page transition curtain (GSAP drives the transform) */
+.curtain { transform: translateY(100%); }
+
+/* ───────── Nitex Signature Motion & Aesthetics ───────── */
+.text-reveal-v2 {
+  --duration: 0.7s;
+  --stagger: 0.15s;
+}
+
+.text-reveal-v2 .line-mask {
+  display: block;
+  overflow: visible !important;
+  transform: translate(-3.5rem);
+  transition: transform calc(var(--duration) * 1.6) cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.text-reveal-v2 .line-mask:nth-of-type(1) .line { transition-delay: 0s; }
+.text-reveal-v2 .line-mask:nth-of-type(2) .line { transition-delay: calc(var(--stagger) * 1); }
+.text-reveal-v2 .line-mask:nth-of-type(3) .line { transition-delay: calc(var(--stagger) * 2); }
+.text-reveal-v2 .line-mask:nth-of-type(4) .line { transition-delay: calc(var(--stagger) * 3); }
+.text-reveal-v2 .line-mask:nth-of-type(5) .line { transition-delay: calc(var(--stagger) * 4); }
+
+.text-reveal-v2 .line {
+  clip-path: polygon(-100% 0, 0 0, -5% 100%, -100% 100%);
+  -webkit-clip-path: polygon(-100% 0, 0 0, -5% 100%, -100% 100%);
+  display: inline-block !important;
+  transition: clip-path var(--duration) cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: clip-path, transform;
+}
+
+.text-reveal-v2.is-seen .line-mask {
+  transform: translate(0);
+}
+
+.text-reveal-v2.is-seen .line {
+  clip-path: polygon(-100% 0, 105% 0, 100% 100%, -100% 100%);
+  -webkit-clip-path: polygon(-100% 0, 105% 0, 100% 100%, -100% 100%);
+}
+
+/* Skewed logomark indicator */
+.logomark {
+  display: inline-block;
+  vertical-align: middle;
+  transform: skewX(-20deg);
+}
+
+/* Admin form controls */
+.field { @apply w-full border border-ink/30 bg-paper px-3 py-2 text-sm outline-none focus:border-ink; }
+.btn { @apply inline-flex items-center gap-2 bg-ink px-3 py-2 font-mono text-xs uppercase text-accent transition-colors hover:bg-accent hover:text-ink disabled:opacity-50; }
+.btn-ghost { @apply inline-flex items-center gap-2 border border-ink px-3 py-2 font-mono text-xs uppercase hover:bg-ink hover:text-paper; }
+
